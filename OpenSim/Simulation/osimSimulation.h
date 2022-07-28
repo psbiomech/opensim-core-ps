@@ -41,6 +41,7 @@
 #include "Model/CoordinateSet.h"
 #include "Model/ElasticFoundationForce.h"
 #include "Model/HuntCrossleyForce.h"
+#include "Model/SmoothSphereClosedHalfSpaceForce.h"
 #include "Model/SmoothSphereHalfSpaceForce.h"
 #include "Model/Ligament.h"
 #include "Model/Blankevoort1991Ligament.h"
