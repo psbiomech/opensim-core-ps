@@ -61,6 +61,11 @@ void SmoothSphereClosedHalfSpaceForce::extendAddToSystem(
     double cf = get_constant_contact_force();
     double bd = get_hertz_smoothing();
     double bv = get_hunt_crossley_smoothing();
+    
+    double fp_tanh_coeff = get_fp_tanh_coeff();
+    SimTK::Vec3 fp_center = get_fp_center();
+    double fp_x_dim = get_fp_x_dim();
+    double fp_z_dim = get_fp_z_dim();
 
     SimTK::SmoothSphereClosedHalfSpaceForce force(_model->updForceSubsystem());
 
@@ -76,6 +81,9 @@ void SmoothSphereClosedHalfSpaceForce::extendAddToSystem(
     force.setConstantContactForce(cf);
     force.setHertzSmoothing(bd);
     force.setHuntCrossleySmoothing(bv);
+
+    force.setFPTanhCoeff(fp_tanh_coeff);
+    force.setFPInfo(fp_center, fp_x_dim, fp_z_dim);
 
     force.setContactSphereBody(sphere.getFrame().getMobilizedBody());
     force.setContactSphereLocationInBody(
@@ -116,6 +124,10 @@ void SmoothSphereClosedHalfSpaceForce::constructProperties() {
     constructProperty_constant_contact_force(1e-5);
     constructProperty_hertz_smoothing(300.0);
     constructProperty_hunt_crossley_smoothing(50.0);
+    constructProperty_fp_tanh_coeff(1E6);
+    constructProperty_fp_center(SimTK::Vec3(-0.5, 0, 0.5));
+    constructProperty_fp_x_dim(1.0);
+    constructProperty_fp_z_dim(1.0);
     constructProperty_force_visualization_radius(0.01);
     constructProperty_force_visualization_scale_factor();
 }
