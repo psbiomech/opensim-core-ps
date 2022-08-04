@@ -1,11 +1,11 @@
-#ifndef OPENSIM_MOCOCONTACTTRACKINGGOAL_H
-#define OPENSIM_MOCOCONTACTTRACKINGGOAL_H
+#ifndef OPENSIM_MOCOMULTIPLEPLATFORMCONTACTTRACKINGGOAL_H
+#define OPENSIM_MOCOMULTIPLEPLATFORMCONTACTTRACKINGGOAL_H
 /* -------------------------------------------------------------------------- *
- * OpenSim: MocoContactTrackingGoal.h                                         *
+ * OpenSim: MocoMultiplePlatformContactTrackingGoal.h                                         *
  * -------------------------------------------------------------------------- *
  * Copyright (c) 2020 Stanford University and the Authors                     *
  *                                                                            *
- * Author(s): Prasanna Sritharan, Christopher Dembia                          *
+ * Author(s): Christopher Dembia                                              *
  *                                                                            *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may    *
  * not use this file except in compliance with the License. You may obtain a  *
@@ -24,10 +24,11 @@
 namespace OpenSim {
 
 class SmoothSphereHalfSpaceForce;
+class SmoothSphereClosedHalfSpaceForce;
 /** 
-\section MocoContactTrackingGoalGroup
+\section MocoMultiplePlatformContactTrackingGoalGroup
 A contact group consists of the name of a single ExternalForce and a list of
-contact force component paths in the model. The MocoContactTrackingGoal
+contact force component paths in the model. The MocoMultiplePlatformContactTrackingGoal
 calculates the difference between the data from the ExternalForce and the sum of
 the forces from the contact force components.
 
@@ -47,9 +48,9 @@ specifying these alternative frames, Moco does not know which force to use
 (the force on the sphere or the force on the half-space) when summing the
 contact forces across contact force elements.
 
-@see MocoContactTrackingGoal */
-class OSIMMOCO_API MocoContactTrackingGoalGroup : public Object {
-    OpenSim_DECLARE_CONCRETE_OBJECT(MocoContactTrackingGoalGroup, Object);
+@see MocoMultiplePlatformContactTrackingGoal */
+class OSIMMOCO_API MocoMultiplePlatformContactTrackingGoalGroup : public Object {
+    OpenSim_DECLARE_CONCRETE_OBJECT(MocoMultiplePlatformContactTrackingGoalGroup, Object);
 public:
     OpenSim_DECLARE_LIST_PROPERTY(contact_force_paths, std::string,
             "Paths to SmoothSphereHalfSpaceForce objects in the model whose "
@@ -61,11 +62,11 @@ public:
             "If neither of the two bodies/frames of a contact force match "
             "ExternalForce's applied_to_body, then one of the bodies/frames "
             "must match one of these alternative frame paths.");
-    MocoContactTrackingGoalGroup();
-    MocoContactTrackingGoalGroup(
+    MocoMultiplePlatformContactTrackingGoalGroup();
+    MocoMultiplePlatformContactTrackingGoalGroup(
             const std::vector<std::string>& contactForcePaths,
             const std::string& externalForceName);
-    MocoContactTrackingGoalGroup(
+    MocoMultiplePlatformContactTrackingGoalGroup(
             const std::vector<std::string>& contactForcePaths,
             const std::string& externalForceName,
             const std::vector<std::string>& altFramePaths);
@@ -75,7 +76,7 @@ private:
 
 
 /**
-\section MocoContactTrackingGoal
+\section MocoMultiplePlatformContactTrackingGoal
 Minimize the error between compliant contact force elements in the model and
 experimentally measured contact forces.
 
@@ -175,24 +176,24 @@ Y = 1, Z = 2) of the scaled force value. The direction is applied in
 whatever frame the reference data is expressed in based on the provided
 ExternalLoads in each contact group.
 
-Adding a scale factor to a MocoContactTrackingGoal.
+Adding a scale factor to a MocoMultiplePlatformContactTrackingGoal.
 @code
-auto* markerTrackingGoal = problem.addGoal<MocoContactTrackingGoal>();
+auto* markerTrackingGoal = problem.addGoal<MocoMultiplePlatformContactTrackingGoal>();
 ...
 markerTrackingGoal->addScaleFactor(
         'RightGRF_vertical_scale_factor', 'Right_GRF', 1, {0.5, 2.0});
 @endcode
 
 @ingroup mocogoal */
-class OSIMMOCO_API MocoContactTrackingGoal : public MocoGoal {
-    OpenSim_DECLARE_CONCRETE_OBJECT(MocoContactTrackingGoal, MocoGoal);
+class OSIMMOCO_API MocoMultiplePlatformContactTrackingGoal : public MocoGoal {
+    OpenSim_DECLARE_CONCRETE_OBJECT(MocoMultiplePlatformContactTrackingGoal, MocoGoal);
 
 public:
-    MocoContactTrackingGoal() { constructProperties(); }
-    MocoContactTrackingGoal(std::string name) : MocoGoal(std::move(name)) {
+    MocoMultiplePlatformContactTrackingGoal() { constructProperties(); }
+    MocoMultiplePlatformContactTrackingGoal(std::string name) : MocoGoal(std::move(name)) {
         constructProperties();
     }
-    MocoContactTrackingGoal(std::string name, double weight)
+    MocoMultiplePlatformContactTrackingGoal(std::string name, double weight)
             : MocoGoal(std::move(name), weight) {
         constructProperties();
     }
@@ -210,7 +211,7 @@ public:
     void addContactGroup(
             const std::vector<std::string>& contactForcePaths,
             const std::string& externalForceName) {
-        append_contact_groups(MocoContactTrackingGoalGroup(
+        append_contact_groups(MocoMultiplePlatformContactTrackingGoalGroup(
                 contactForcePaths, externalForceName));
     }
     /// Add a group of contact forces whose sum should track the force data from
@@ -219,8 +220,8 @@ public:
     /// distributed across multiple bodies use this function instead of the
     /// easier-to-use addContactGroup(), and set the group's
     /// alternative_frame_paths property accordingly. See
-    /// MocoContactTrackingGoalGroup for more information.
-    void addContactGroup(MocoContactTrackingGoalGroup group) {
+    /// MocoMultiplePlatformContactTrackingGoalGroup for more information.
+    void addContactGroup(MocoMultiplePlatformContactTrackingGoalGroup group) {
         append_contact_groups(std::move(group));
     }
 
@@ -271,7 +272,7 @@ protected:
 
 private:
     // PROPERTIES
-    OpenSim_DECLARE_LIST_PROPERTY(contact_groups, MocoContactTrackingGoalGroup,
+    OpenSim_DECLARE_LIST_PROPERTY(contact_groups, MocoMultiplePlatformContactTrackingGoalGroup,
             "Associate contact elements in the model with force data.");
     OpenSim_DECLARE_OPTIONAL_PROPERTY(external_loads, ExternalLoads,
             "Experimental contact force data.");
@@ -292,9 +293,15 @@ private:
     /// For a given contact force, find the starting index of the forces from
     /// SmoothSphereHalfSpaceForce::getRecordValues().
     int findRecordOffset(
-            const MocoContactTrackingGoalGroup& group,
+            const MocoMultiplePlatformContactTrackingGoalGroup& group,
             const SmoothSphereHalfSpaceForce& contactForce,
             const std::string& appliedToBody) const;
+
+    int findRecordOffset(
+            const MocoMultiplePlatformContactTrackingGoalGroup& group,
+            const SmoothSphereClosedHalfSpaceForce& contactForce,
+            const std::string& appliedToBody) const;
+
 
     enum class ProjectionType {
         None,
@@ -311,6 +318,7 @@ private:
     /// experimental data.
     struct GroupInfo {
         std::vector<std::pair<const SmoothSphereHalfSpaceForce*, int>> contacts;
+        std::vector<std::pair<const SmoothSphereClosedHalfSpaceForce*, int>> closed_contacts;
         GCVSplineSet refSplines;
         const PhysicalFrame* refExpressedInFrame = nullptr;
     };
@@ -323,4 +331,4 @@ private:
 
 } // namespace OpenSim
 
-#endif // OPENSIM_MOCOCONTACTTRACKINGGOAL_H
+#endif // OPENSIM_MOCOMULTIPLEPLATFORMCONTACTTRACKINGGOAL_H
