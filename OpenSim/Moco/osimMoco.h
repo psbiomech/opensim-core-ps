@@ -37,6 +37,7 @@
 #include "MocoGoal/MocoJointReactionGoal.h"
 #include "MocoGoal/MocoMarkerFinalGoal.h"
 #include "MocoGoal/MocoMarkerTrackingGoal.h"
+#include "MocoGoal/MocoMultiplePlatformContactTrackingGoal.h"
 #include "MocoGoal/MocoOrientationTrackingGoal.h"
 #include "MocoGoal/MocoOutputGoal.h"
 #include "MocoGoal/MocoPeriodicityGoal.h"

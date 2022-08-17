@@ -1,9 +1,9 @@
 /* -------------------------------------------------------------------------- *
- *                   OpenSim: SmoothSphereClosedHalfSpaceForce.cpp                  *
+ *                   OpenSim: SmoothSphereClosedHalfSpaceForce.cpp            *
  * -------------------------------------------------------------------------- *
  * Copyright (c) 2017-19 Stanford University and the Authors                  *
  *                                                                            *
- * Author(s): Prasanna Sritharan, Antoine Falisse, Gil Serrancoli             *
+ * Author(s): Antoine Falisse, Gil Serrancoli                                 *
  * Contributors: Peter Eastman                                                *
  *                                                                            *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may    *

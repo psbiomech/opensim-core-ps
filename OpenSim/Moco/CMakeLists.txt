@@ -38,6 +38,8 @@ set(MOCO_SOURCES
         MocoGoal/MocoControlGoal.cpp
         MocoGoal/MocoControlTrackingGoal.h
         MocoGoal/MocoControlTrackingGoal.cpp
+		MocoGoal/MocoMultiplePlatformContactTrackingGoal.h
+        MocoGoal/MocoMultiplePlatformContactTrackingGoal.cpp
         MocoGoal/MocoJointReactionGoal.h
         MocoGoal/MocoJointReactionGoal.cpp
         MocoGoal/MocoOrientationTrackingGoal.h
